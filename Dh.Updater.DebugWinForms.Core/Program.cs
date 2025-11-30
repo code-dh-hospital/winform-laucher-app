@@ -61,13 +61,13 @@ namespace Dh.Launcher.DebugWinForms
 
                 BaseLauncher.UpdateCompleted += (s, e) =>
                 {
-                    Dh.AppLauncher.Logging.LogManager.Info(
+                    LogManager.Info(
                         $"[UpdateCompleted] newVersion={e.NewVersion}");
                 };
 
                 BaseLauncher.SummaryChangedFilesAvailable += (s, e) =>
                 {
-                    Dh.AppLauncher.Logging.LogManager.Info(
+                    LogManager.Info(
                         $"SummaryChangedFiles for version {e.NewVersion} (dryRun={e.IsDryRun}) " +
                         $"TotalPlannedDownloadBytes={e.TotalPlannedDownloadBytes}, KnownChangedBytes={e.KnownChangedBytes}");
                 };
