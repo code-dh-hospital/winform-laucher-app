@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,6 +8,7 @@
     <AssemblyName>Dh.Launcher.ConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
+    <ProjectGuid>{6267B9CB-639A-4CB6-8AB5-CA6A5D5823AA}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -21,6 +22,10 @@
     <ProjectReference Include="..\Dh.AppLauncher.Core\Dh.AppLauncher.Core.csproj">
       <Project>{A1C9E7CF-6E8B-4D9D-9282-969725F5C8E8}</Project>
       <Name>Dh.AppLauncher.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dh.Updater.DebugConsole.Core\Dh.Updater.DebugConsole.Core.csproj">
+      <Project>{e6f6015c-f8ec-4113-b599-d1ec2fd49652}</Project>
+      <Name>Dh.Updater.DebugConsole.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

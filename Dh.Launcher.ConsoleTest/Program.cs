@@ -43,36 +43,37 @@ namespace Dh.Launcher.ConsoleTest
                 BaseLauncher.UpdateProgress += (s, e) =>
                 {
                     Console.WriteLine(
-                        "[UpdateProgress] stage={0}, downloaded={1}, total={2}",
-                        e.Stage,
-                        e.BytesDownloaded,
+                        "[UpdateProgress] file={0}, bytesReceived={1}, totalBytes={2}",
+                        e.FileName,
+                        e.BytesReceived,
                         e.TotalBytes);
                 };
 
                 BaseLauncher.UpdateCompleted += (s, e) =>
                 {
                     Console.WriteLine(
-                        "[UpdateCompleted] success={0}, newVersion={1}, message={2}",
-                        e.Success,
-                        e.NewVersion,
-                        e.Message ?? "(null)");
+                        "[UpdateCompleted] newVersion={0}",
+                        e.NewVersion);
                 };
 
                 BaseLauncher.SummaryChangedFilesAvailable += (s, e) =>
                 {
                     Console.WriteLine("SummaryChangedFiles for version {0} (dryRun={1})",
-                        e.Version,
-                        e.DryRun);
+                        e.NewVersion,
+                        e.IsDryRun);
 
                     Console.WriteLine("  Changed files:");
-                    foreach (var f in e.ChangedFiles ?? Array.Empty<string>())
+                    if (e.ChangedFiles != null)
                     {
-                        Console.WriteLine("    " + f);
+                        foreach (var f in e.ChangedFiles)
+                        {
+                            Console.WriteLine("    " + f);
+                        }
                     }
 
                     Console.WriteLine(
-                        "  PlannedDownloadBytes={0}, KnownChangedBytes={1}",
-                        e.PlannedDownloadBytes,
+                        "  TotalPlannedDownloadBytes={0}, KnownChangedBytes={1}",
+                        e.TotalPlannedDownloadBytes,
                         e.KnownChangedBytes);
                 };
 
@@ -98,7 +99,7 @@ namespace Dh.Launcher.ConsoleTest
                 // - URL manifest được lấy từ launcher.json trong LocalRoot,
                 //   không set qua opt.ManifestUrls nữa.
 
-                int rc = AppLauncher.Run(opt);
+                int rc = BaseLauncher.Run(opt);
                 Console.WriteLine("ExitCode: {0}", rc);
                 Console.WriteLine("Press any key...");
                 Console.ReadKey();
