@@ -198,6 +198,106 @@ namespace Dh.AppLauncher.CoreEnvironment
             var versions = GetInstalledVersions();
             if (versions.Length == 1){ _config.ActiveVersion = versions[0]; SaveConfig(); }
         }
+        // AppEnvironment.cs
+        // Chỉnh sửa: 2025-11-30 - ChatGPT (assistant)
+        // Lý do:
+        //  - Khi app chạy lần đầu, chưa có Versions và chưa có active_version,
+        //    tự bootstrap version đầu tiên từ một thư mục source (thường là bin folder).
+        //  - Quy tắc mới: 
+        //      + *.exe, *.dll  => copy vào thư mục version (Versions\<version>\)
+        //      + Các file còn lại => copy vào LocalRoot (thư mục dùng chung), giữ nguyên cấu trúc subfolder.
+
+        public string BootstrapInitialVersionIfNeeded(string initialVersion, string sourceFolder)
+        {
+            if (string.IsNullOrWhiteSpace(initialVersion))
+                throw new ArgumentNullException(nameof(initialVersion));
+
+            if (string.IsNullOrWhiteSpace(sourceFolder))
+                throw new ArgumentNullException(nameof(sourceFolder));
+
+            if (!Directory.Exists(sourceFolder))
+                throw new DirectoryNotFoundException("Source folder not found: " + sourceFolder);
+
+            // Nếu đã có active_version rồi thì không làm gì.
+            if (!string.IsNullOrWhiteSpace(_config.ActiveVersion))
+                return _config.ActiveVersion;
+
+            // Nếu đã có ít nhất 1 version trong thư mục Versions thì cũng không bootstrap.
+            var installed = GetInstalledVersions();
+            if (installed != null && installed.Length > 0)
+                return installed[0];
+
+            // Tới đây: chưa có version nào → tạo version đầu tiên.
+            string targetVersion = initialVersion.Trim();
+            string versionFolder = Path.Combine(_versionsRoot, targetVersion);
+            Directory.CreateDirectory(versionFolder);
+
+            // Root dùng chung: chính là LocalRoot của app.
+            string sharedRoot = _localRoot;
+            Directory.CreateDirectory(sharedRoot);
+
+            // Lấy tất cả file (bao gồm thư mục con).
+            string[] allFiles;
+            try
+            {
+                allFiles = Directory.GetFiles(sourceFolder, "*", SearchOption.AllDirectories);
+            }
+            catch (Exception ex)
+            {
+                // Nếu có lỗi đọc file thì ném exception để caller log chi tiết.
+                throw new InvalidOperationException("Failed to enumerate files in sourceFolder: " + sourceFolder, ex);
+            }
+
+            foreach (var file in allFiles)
+            {
+                // Bỏ qua chính launcher local root (phòng trường hợp source trùng localRoot, cực hiếm).
+                // Chủ yếu để tránh tự copy ngược lại.
+                if (file.StartsWith(sharedRoot, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                string relativePath = file.Substring(sourceFolder.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                string ext = Path.GetExtension(file);
+
+                bool isBinary =
+                    ext.Equals(".exe", StringComparison.OrdinalIgnoreCase) ||
+                    ext.Equals(".dll", StringComparison.OrdinalIgnoreCase);
+
+                // Nếu là exe/dll => đưa vào thư mục version.
+                // Ngược lại => đưa vào LocalRoot (dùng chung).
+                string targetBase = isBinary ? versionFolder : sharedRoot;
+                string destPath = Path.Combine(targetBase, relativePath);
+
+                try
+                {
+                    string destDir = Path.GetDirectoryName(destPath);
+                    if (!string.IsNullOrEmpty(destDir))
+                    {
+                        Directory.CreateDirectory(destDir);
+                    }
+
+                    // Không overwrite nếu file đã tồn tại (đề phòng chạy lại).
+                    if (!File.Exists(destPath))
+                    {
+                        File.Copy(file, destPath, false);
+                    }
+                }
+                catch
+                {
+                    // Không để lỗi copy 1 file làm hỏng toàn bộ bootstrap.
+                    // Chi tiết lỗi đã được log phía trên (nếu cần ta có thể bổ sung logging sau).
+                }
+            }
+
+            // Ghi lại active_version vào launcher.json
+            _config.ActiveVersion = targetVersion;
+            if (_config.KeepVersions <= 0)
+                _config.KeepVersions = 5;
+
+            SaveConfig();
+
+            return targetVersion;
+        }
+
 
         internal bool CanAttemptUpdateVersion(string version, int maxAttempts, int retryMinutes)
         {

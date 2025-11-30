@@ -1,3 +1,11 @@
-using System.Reflection; using System.Runtime.InteropServices;
-[assembly: AssemblyTitle("Dh.Updater.DebugConsole.Core")] [assembly: AssemblyDescription("")] [assembly: AssemblyConfiguration("")] [assembly: AssemblyCompany("YourCompany")] [assembly: AssemblyProduct("Dh.Updater.DebugConsole.Core")]
-[assembly: ComVisible(false)] [assembly: Guid("e3ab1e60-8799-4d7d-a2fa-9cbf1867fa0b")] [assembly: AssemblyVersion("1.0.0.0")] [assembly: AssemblyFileVersion("1.0.0.0")]
+using System.Reflection;
+using System.Runtime.InteropServices;
+[assembly: AssemblyTitle("Dh.Updater.DebugConsole.Core")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("YourCompany")]
+[assembly: AssemblyProduct("Dh.Updater.DebugConsole.Core")]
+[assembly: ComVisible(false)]
+[assembly: Guid("e3ab1e60-8799-4d7d-a2fa-9cbf1867fa0b")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyFileVersion("1.0.0.1")]

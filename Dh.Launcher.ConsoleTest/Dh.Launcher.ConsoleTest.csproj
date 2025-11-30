@@ -27,6 +27,10 @@
       <Project>{e6f6015c-f8ec-4113-b599-d1ec2fd49652}</Project>
       <Name>Dh.Updater.DebugConsole.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dh.Updater.DebugWinForms.Core\Dh.Updater.DebugWinForms.Core.csproj">
+      <Project>{627d347d-4f4e-4425-b8ca-7ba8dda12201}</Project>
+      <Name>Dh.Updater.DebugWinForms.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

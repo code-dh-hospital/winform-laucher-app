@@ -39,6 +39,56 @@ namespace Dh.AppLauncher.Core
             {
                 var env = AppEnvironment.Initialize(options.AppName);
                 LogManager.Initialize(env);
+
+                // AppLauncher.cs - trong BaseLauncher.Run
+                // Chỉnh sửa: 2025-11-30 - ChatGPT (assistant)
+                // Lý do:
+                //  - Khi app chạy lần đầu (LocalRoot chưa có Versions và launcher.json chưa có active_version)
+                //    thì tự bootstrap version đầu tiên từ thư mục hiện tại của process.
+
+                try
+                {
+                    // Thư mục hiện tại của process (thường là nơi chứa launcher / core ban đầu).
+                    var sourceFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+                    // Lấy version từ entry assembly nếu có, nếu không thì fallback.
+                    var entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
+                    string initialVersion = null;
+
+                    if (entryAssembly != null)
+                    {
+                        var v = entryAssembly.GetName().Version;
+                        if (v != null)
+                        {
+                            // Format 4 số classic: major.minor.build.revision
+                            initialVersion = string.Format(
+                                "{0}.{1}.{2}.{3}",
+                                v.Major,
+                                v.Minor,
+                                v.Build,
+                                v.Revision
+                            );
+                        }
+                    }
+
+                    if (string.IsNullOrWhiteSpace(initialVersion))
+                    {
+                        // Nếu không lấy được version từ assembly, dùng version mặc định.
+                        initialVersion = "1.0.0.0";
+                    }
+
+                    var bootstrappedVersion = env.BootstrapInitialVersionIfNeeded(initialVersion, sourceFolder);
+
+                    Dh.AppLauncher.Logging.LogManager.Info(
+                        $"BootstrapInitialVersionIfNeeded: initialVersion={initialVersion}, resultActiveVersion={bootstrappedVersion}");
+                }
+                catch (Exception ex)
+                {
+                    // Không cho phép lỗi bootstrap làm crash app; chỉ log lại.
+                    Dh.AppLauncher.Logging.LogManager.Error("BootstrapInitialVersionIfNeeded failed", ex);
+                }
+
+
                 env.EnsureActiveVersionFromSingleInstalled();
                 var configSnapshot = env.GetConfigSnapshot();
 
