@@ -7,5 +7,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Dh.AppLauncher.Core")]
 [assembly: ComVisible(false)]
 [assembly: Guid("c4f310c8-8515-4c45-8d93-bf9380c7a9f2")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyFileVersion("1.0.0.1")]

@@ -9,7 +9,7 @@ using Dh.AppLauncher.Update;
 using Dh.AppLauncher.Manifest;
 using Dh.AppLauncher.Http;
 
-namespace Dh.AppLauncher
+namespace Dh.AppLauncher.Core
 {
     public sealed class UpdateEnforcementInfoEventArgs : EventArgs
     {
@@ -20,7 +20,7 @@ namespace Dh.AppLauncher
         public UpdateEnforcementInfoEventArgs(string cur, string neu, UpdateEnforcementLevel level, bool applied){ CurrentVersion=cur; NewVersion=neu; Level=level; UpdateApplied=applied; }
     }
 
-    public static class AppLauncher
+    public static class BaseLauncher
     {
         public static event EventHandler<UpdateAvailableEventArgs> UpdateAvailable;
         public static event EventHandler<UpdateProgressEventArgs> UpdateProgress;
