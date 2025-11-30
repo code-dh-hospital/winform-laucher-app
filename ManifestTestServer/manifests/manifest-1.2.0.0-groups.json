@@ -1,0 +1,32 @@
+{
+  "version": "1.2.0.0",
+  "sha512": "PLACEHOLDER_SHA512_FOR_1.2.0.0",
+  "package_type": "incremental",
+  "urls": [
+    "http://localhost:3000/files/ok/1.2.0.0/"
+  ],
+  "changelog": "v1.2.0.0: ch\u1ec9 \u00e1p d\u1ee5ng cho clients thu\u1ed9c group HOSPITAL-A v\u00e0 tag beta.",
+  "update_level": "silent",
+  "client_match": {
+    "rules": [
+      {
+        "groups": [
+          "HOSPITAL-A"
+        ],
+        "tags": [
+          "beta"
+        ]
+      }
+    ],
+    "required": true
+  },
+  "file_md5": {
+    "Dh.Updater.DebugConsole.Core.dll": {
+      "md5": "97d0fbcf6e3543c919e8fcbc887bcea1",
+      "url": "http://localhost:3000/files/ok/1.2.0.0/Dh.Updater.DebugConsole.Core.dll",
+      "urls": [
+        "http://localhost:3000/files/ok/1.2.0.0/Dh.Updater.DebugConsole.Core.dll"
+      ]
+    }
+  }
+}

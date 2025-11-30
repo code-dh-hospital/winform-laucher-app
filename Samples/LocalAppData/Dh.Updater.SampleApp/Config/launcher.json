@@ -1,0 +1,20 @@
+{
+  "active_version": "1.0.0.0",
+  "keep_versions": 3,
+  "auto_check_updates": true,
+  "check_interval_minutes": 30,
+  "latest_manifest_urls": [
+    "https://update.example.com/sampleapp/latest.json",
+    "https://backup.example.com/sampleapp/latest.json"
+  ],
+  "version_manifest_templates": [
+    "https://update.example.com/sampleapp/manifest-{version}.json",
+    "https://backup.example.com/sampleapp/manifest-{version}.json"
+  ],
+  "auto_repair_missing_files": true,
+  "max_update_attempts_per_version": 3,
+  "failed_version_retry_minutes": 60,
+  "allow_downgrade": false,
+  "skip_update_if_offline": true,
+  "default_update_level": "silent"
+}

@@ -1,0 +1,1 @@
+Copy core DLLs here to simulate installed 1.0.0.0

@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0.0",
+  "sha512": "PLACEHOLDER_SHA512_FOR_1.0.0.0",
+  "package_type": "full",
+  "urls": [
+    "https://update.example.com/sampleapp/1.0.0.0/",
+    "https://backup.example.com/sampleapp/1.0.0.0/"
+  ],
+  "changelog": "Initial release (v1.0.0.0).",
+  "update_level": "silent",
+  "file_md5": {
+    "Dh.Updater.DebugConsole.Core.dll": {
+      "md5": "md5-console-1.0.0.0",
+      "url": "https://update.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugConsole.Core.dll",
+      "urls": [
+        "https://update.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugConsole.Core.dll",
+        "https://backup.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugConsole.Core.dll"
+      ]
+    },
+    "Dh.Updater.DebugWinForms.Core.dll": {
+      "md5": "md5-wf-1.0.0.0",
+      "url": "https://update.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugWinForms.Core.dll",
+      "urls": [
+        "https://update.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugWinForms.Core.dll",
+        "https://backup.example.com/sampleapp/1.0.0.0/Dh.Updater.DebugWinForms.Core.dll"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0.0",
+  "sha512": "PLACEHOLDER_SHA512_FOR_1.0.0.0",
+  "package_type": "full",
+  "urls": [
+    "http://localhost:3000/files/1.0.0.0/"
+  ],
+  "changelog": "Initial release from manifest test server.",
+  "update_level": "silent",
+  "file_md5": {
+    "Dh.Updater.DebugConsole.Core.dll": {
+      "md5": "md5-console-1.0.0.0",
+      "url": "http://localhost:3000/files/1.0.0.0/Dh.Updater.DebugConsole.Core.dll",
+      "urls": [
+        "http://localhost:3000/files/1.0.0.0/Dh.Updater.DebugConsole.Core.dll"
+      ]
+    }
+  }
+}

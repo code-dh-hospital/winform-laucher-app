@@ -1,0 +1,29 @@
+{
+  "version": "1.2.0.0",
+  "sha512": "PLACEHOLDER_SHA512_FOR_1.2.0.0",
+  "package_type": "incremental",
+  "urls": [
+    "https://update.example.com/sampleapp/1.2.0.0/",
+    "https://backup.example.com/sampleapp/1.2.0.0/"
+  ],
+  "changelog": "v1.2.0.0: S\u1eeda l\u1ed7i quan tr\u1ecdng, c\u1eadp nh\u1eadt b\u1ea3o m\u1eadt (force, all clients).",
+  "update_level": "force",
+  "file_md5": {
+    "Dh.Updater.DebugConsole.Core.dll": {
+      "md5": "md5-console-1.2.0.0",
+      "url": "https://update.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugConsole.Core.dll",
+      "urls": [
+        "https://update.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugConsole.Core.dll",
+        "https://backup.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugConsole.Core.dll"
+      ]
+    },
+    "Dh.Updater.DebugWinForms.Core.dll": {
+      "md5": "md5-wf-1.2.0.0",
+      "url": "https://update.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugWinForms.Core.dll",
+      "urls": [
+        "https://update.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugWinForms.Core.dll",
+        "https://backup.example.com/sampleapp/1.2.0.0/Dh.Updater.DebugWinForms.Core.dll"
+      ]
+    }
+  }
+}
