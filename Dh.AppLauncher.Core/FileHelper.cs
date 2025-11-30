@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dh.AppLauncher
 {
-    internal static class FileHelper
+    public static class FileHelper
     {
         public static string ComputeFileMd5(string path)
         {

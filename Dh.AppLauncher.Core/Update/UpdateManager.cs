@@ -626,19 +626,18 @@ namespace Dh.AppLauncher.Update
                 File.Copy(tmp, info.TargetPath, true); File.Delete(tmp);
             }
         }
-    }
-}
-
         /// <summary>
         /// Thực hiện kiểm tra cập nhật ở chế độ dry-run (không chép file, không đổi active version).
         /// Sử dụng cho UI muốn xem trước: version mới, mức độ enforcement, danh sách file thay đổi…
         /// </summary>
-        public System.Threading.Tasks.Task<UpdateResult> CheckOnlyAsync(System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<UpdateCheckResult> CheckOnlyAsync(System.Threading.CancellationToken cancellationToken)
         {
+            // Sao lưu trạng thái DryRunOnly hiện tại để không ảnh hưởng tới lần gọi sau.
             bool backup = _options.DryRunOnly;
             try
             {
                 _options.DryRunOnly = true;
+                // Tận dụng toàn bộ luồng CheckAndUpdateAsync, nhưng luôn ở chế độ dry-run.
                 return CheckAndUpdateAsync(cancellationToken);
             }
             finally
@@ -651,12 +650,13 @@ namespace Dh.AppLauncher.Update
         /// Thực hiện kiểm tra và áp dụng bản cập nhật mới nhất theo options hiện tại (DryRunOnly = false).
         /// Nếu không có bản mới, sẽ chỉ trả về kết quả check mà không chép file.
         /// </summary>
-        public System.Threading.Tasks.Task<UpdateResult> ApplyLatestAsync(System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<UpdateCheckResult> ApplyLatestAsync(System.Threading.CancellationToken cancellationToken)
         {
             bool backup = _options.DryRunOnly;
             try
             {
                 _options.DryRunOnly = false;
+                // Cho phép CheckAndUpdateAsync áp dụng update thực sự nếu có.
                 return CheckAndUpdateAsync(cancellationToken);
             }
             finally
@@ -664,3 +664,6 @@ namespace Dh.AppLauncher.Update
                 _options.DryRunOnly = backup;
             }
         }
+
+    }
+}

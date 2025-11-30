@@ -7,6 +7,7 @@
     <RootNamespace>Dh.Updater.DebugWinForms.Core</RootNamespace>
     <AssemblyName>Dh.Updater.DebugWinForms.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

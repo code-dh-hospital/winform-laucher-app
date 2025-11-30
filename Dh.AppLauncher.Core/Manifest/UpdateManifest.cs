@@ -85,7 +85,7 @@ namespace Dh.AppLauncher.Manifest
         public static UpdateManifest FromXml(string xml)
         {
             var doc = new XmlDocument(); doc.LoadXml(xml);
-            var json = JsonConvert.SerializeXmlNode(doc, Formatting.None, true);
+            var json = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.None, true);
             var jObj = JObject.Parse(json);
             throw new NotImplementedException("XML mapping not implemented.");
         }

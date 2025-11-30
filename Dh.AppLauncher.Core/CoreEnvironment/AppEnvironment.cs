@@ -218,5 +218,9 @@ namespace Dh.AppLauncher.CoreEnvironment
             else { info.AttemptCount++; info.LastError = errorKind; }
             SaveUpdateState();
         }
+        public string GetVersionsRoot()
+        {
+            return _versionsRoot;
+        }
     }
 }

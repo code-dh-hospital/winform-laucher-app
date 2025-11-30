@@ -22,7 +22,7 @@ namespace Dh.Launcher.ConsoleTest
                 Console.WriteLine("ClientId: {0}", env.GetClientId() ?? "(null)");
                 Console.WriteLine("LocalRoot: {0}", env.LocalRoot);
 
-                AppLauncher.SummaryChangedFilesAvailable += (s, e) =>
+                Dh.AppLauncher.AppLauncher.SummaryChangedFilesAvailable += (s, e) =>
                 {
                     Console.WriteLine("SummaryChangedFiles for version {0} (dryRun={1})", e.Version, e.DryRun);
                     Console.WriteLine("  Changed files:");
