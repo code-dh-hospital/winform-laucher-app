@@ -40,12 +40,6 @@ namespace Dh.AppLauncher.Core
                 var env = AppEnvironment.Initialize(options.AppName);
                 LogManager.Initialize(env);
 
-                // AppLauncher.cs - trong BaseLauncher.Run
-                // Chỉnh sửa: 2025-11-30 - ChatGPT (assistant)
-                // Lý do:
-                //  - Khi app chạy lần đầu (LocalRoot chưa có Versions và launcher.json chưa có active_version)
-                //    thì tự bootstrap version đầu tiên từ thư mục hiện tại của process.
-
                 try
                 {
                     // Thư mục hiện tại của process (thường là nơi chứa launcher / core ban đầu).

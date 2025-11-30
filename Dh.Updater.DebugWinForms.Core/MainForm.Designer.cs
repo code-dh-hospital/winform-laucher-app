@@ -1,4 +1,4 @@
-namespace Dh.Updater.DebugWinForms.Core
+namespace Dh.Updater.DebugWinForms
 {
     partial class MainForm
     {

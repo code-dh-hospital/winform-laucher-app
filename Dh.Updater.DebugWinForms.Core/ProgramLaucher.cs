@@ -16,7 +16,7 @@ using Dh.AppLauncher.Update;
 using Dh.AppLauncher.CoreEnvironment;
 using Dh.AppLauncher.Logging;
 
-namespace Dh.Launcher.DebugWinForms
+namespace Dh.Updater.DebugWinForms
 {
     internal static class Program
     {
@@ -24,21 +24,20 @@ namespace Dh.Launcher.DebugWinForms
         [STAThread]
         private static int Main(string[] args)
         {
-            // Đảm bảo chỉ một instance launcher chạy để tránh ghi đè LocalRoot.
-            using (var guard = new LauncherInstanceGuard("Dh.Updater.DebugWinForms"))
+            var typeProgram = typeof(Program);
+            var mainAppName = typeProgram.Namespace;
+            using (var guard = new LauncherInstanceGuard(mainAppName))
             {
                 if (!guard.HasHandle)
                 {
                     MessageBox.Show(
-                        "Another instance of Dh.Updater.DebugWinForms is already running.",
+                        $"Another instance of {mainAppName} is already running.",
                         "Launcher",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
-
                     return 0;
                 }
-
-                var env = AppEnvironment.Initialize("Dh.Updater.DebugWinForms");
+                var env = AppEnvironment.Initialize(mainAppName);
                 LogManager.Initialize(env);
 
                 // Bạn có thể log ra file, hoặc dùng Debug.WriteLine.
@@ -50,7 +49,7 @@ namespace Dh.Launcher.DebugWinForms
                 {
                     // Ví dụ: log ra file qua LogManager thay vì MessageBox để tránh phiền.
                     Dh.AppLauncher.Logging.LogManager.Info(
-                        $"[UpdateAvailable] {e.CurrentVersion} -> {e.NewVersion}");
+                    $"[UpdateAvailable] {e.CurrentVersion} -> {e.NewVersion}");
                 };
 
                 BaseLauncher.UpdateProgress += (s, e) =>
@@ -77,16 +76,15 @@ namespace Dh.Launcher.DebugWinForms
                 var opt = new AppLaunchOptions
                 {
                     // Tên app, dùng để tạo: %LocalAppData%\Dh.Updater.DebugWinForms\
-                    AppName = "Dh.Updater.DebugWinForms",
+                    AppName = mainAppName,
 
                     // DLL core WinForms:
                     CoreAssemblyName = "Dh.Updater.DebugWinForms.Core.exe",
 
                     // Host class WinForms đã tạo ở trên:
-                    CoreEntryType = "Dh.Updater.DebugWinForms.Core.MainFormHost",
-
+                    CoreEntryType = $"{typeof(Updater.DebugWinForms.ProgramMain).Namespace}.{nameof(Updater.DebugWinForms.ProgramMain)}",
                     // Phương thức entry dùng reflection:
-                    CoreEntryMethod = "Run",
+                    CoreEntryMethod = nameof(Updater.DebugWinForms.ProgramMain.Run),
 
                     // Truyền nguyên args vào core => MainFormHost.Run(string[] args)
                     Args = args,
@@ -96,20 +94,10 @@ namespace Dh.Launcher.DebugWinForms
                     KeepVersions = 5,
                     DryRunUpdate = false
                 };
-
-                // Lưu ý:
-                // - URL manifest vẫn lấy từ launcher.json trong LocalRoot,
-                //   không set qua opt.ManifestUrls.
-
-                // Chạy launcher: nó sẽ bootstrap version đầu tiên (nếu cần),
-                // tải update (nếu có), sau đó load DLL core và gọi MainFormHost.Run().
                 int rc = BaseLauncher.Run(opt);
-
-                // Vì đây là app WinForms, KHÔNG nên Console.ReadKey.
-                // Nếu cần thông tin lỗi, dùng log hoặc MessageBox ở chỗ catch trong BaseLauncher.
-
                 return rc;
             }
         }
     }
 }
+       

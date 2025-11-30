@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Dh.AppLauncher.CoreEnvironment;
 
-namespace Dh.Updater.DebugWinForms.Core
+namespace Dh.Updater.DebugWinForms
 {
     public partial class MainForm : Form
     {
@@ -12,7 +12,7 @@ namespace Dh.Updater.DebugWinForms.Core
             InitializeComponent();
             var asm = Assembly.GetExecutingAssembly();
             var ver = asm.GetName().Version != null ? asm.GetName().Version.ToString() : "(no version)";
-            var env = AppEnvironment.Initialize("Dh.Updater.SampleApp");
+            var env = AppEnvironment.Initialize(typeof(MainForm).Namespace);
             this.Text = "Debug WinForms Core - v" + ver;
             this.labelVersion.Text = "Core version: " + ver;
             this.labelActive.Text = "Active version: " + (env.GetActiveVersion() ?? "(null)");
